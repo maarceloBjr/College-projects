@@ -16,7 +16,7 @@ function startGame(){
 
 function renderGame(){
 
-    cardsEl.textContent = "Cards: " + cards[0] + " " + cards[1];
+    cardsEl.textContent = "Cards: " + cards.join(" ");
     
     sumEl.textContent = "Sum: " + sum;
 
@@ -39,6 +39,8 @@ function newCard(){
     messageEl.textContent = "Drawing a new card!"; 
 
     let newC = 6;
+
+    cards.push(newC);
     
     sum = sum + newC;
 

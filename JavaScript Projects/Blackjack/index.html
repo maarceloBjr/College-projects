@@ -4,12 +4,36 @@
     </head>
     <body>
         <h1>Blackjack</h1>
-        <p id="message-el">Welcome! Want to play a round?</p>
-        <p id="cards-el">Cards: </p>
-        <p id="sum-el">Sum: </p>
-        <button id="start-btn" onclick="startGame()">START GAME</button>
-        <button id="newCard-btn" onclick="newCard()">NEW CARD</button>
-        <p id="player-el">Your Credits: $40</p>
+        <p id="message-el">Welcome! Want to play a round? Bet and try your luck...</p>
+        <div class="row">
+            <div class="column">
+                <p id="cards-el">Cards: </p>
+                <p id="sum-el">Sum: </p>
+                <button id="start-btn" onclick="startGame()">START GAME</button>
+                <button id="newCard-btn" onclick="newCard()">NEW CARD</button>
+                <p></p>
+                <label for="bet-el">Amount to bet (up to $150):</label>
+                <p></p>
+                <input type="number" id="bet-el">
+                <p></p>
+                <button id="bet-btn" onclick="bet()">BET</button>
+                <p id="bet-el"></p>
+            </div>
+            <div class="column">
+                <label for="name">Name (up to 12 characters):</label>
+                <p></p>
+                <input type="text" id="name-el" minlength="1" maxlength="12">
+                <p></p>
+                <label for="credit-el">Credits to deposit (up to $300):</label>
+                <p></p>
+                <input type="number" id="credit-el" min="1" max="300" step=".01">
+                <p></p>
+                <button id="deposit-btn" onclick="deposit()">DEPOSIT</button>
+                <p id="player-el">Your Credits: $0</p>
+                <button id="withdraw-btn" onclick="withdraw()">WITHDRAW</button>
+                <p id="finalmessage-el"></p>
+            </div>
+        </div>
         <script src="index.js"></script>
     </body>
 </html>

@@ -7,13 +7,16 @@ let isAlive = true;
 let message = "";
 let gameStarted = false;
 let cards = [];
+let dealCards = [];
 let betAmount;
+let dealerSum = 0;
 
 
 let messageEl = document.getElementById("message-el");
 let finalMessageEl = document.getElementById("finalmessage-el");
 let sumEl = document.getElementById("sum-el");
 let cardsEl = document.getElementById("cards-el");
+let dealerCardsEl = document.getElementById("dealer-cards-el");
 let playerEl = document.getElementById("player-el");
 let startBtn = document.getElementById("start-btn");
 let depositBtn = document.getElementById("deposit-btn");
@@ -83,6 +86,15 @@ function bet(){
     }
 }
 
+function dealerCards(){
+    while(dealerSum < 17){
+        let newC = getRandomCard();
+        dealCards.push(newC)
+        dealerSum = dealerSum + newC;
+    }
+    dealerCardsEl.textContent = "Dealer Cards: " + dealCards.join(" ");
+}
+
 
 function startGame(){
     firstCard = getRandomCard();
@@ -93,6 +105,7 @@ function startGame(){
     isAlive = true;
     hasBlackJack = false;
     startBtn = onClickStartBtn();
+    dealerCards();
     renderGame();
 }
 
@@ -102,21 +115,45 @@ function renderGame(){
     
     sumEl.textContent = "Sum: " + sum;
 
-
-    if (sum <= 20) {
-        message = "Do you want to draw a new card? 🙂";
-    } else if (sum === 21) {
-        message = "Wohoo! You've got Blackjack! Bet to play again.";
+    if(dealerSum === 21){
+        message = "You lost! The dealer blackjacked.";
+        isAlive = false;
+        dealerSum = 0;
+        dealCards = [];
+    }else if(dealerSum > 21){
+        message = "The dealer is out of the game! You won!";
         hasBlackJack = true;
         player.credits += (betAmount*1.5);
-    } else {
-        message = "You're out of the game! Bet to play again.";
-        isAlive = false;
-    }
+        dealerSum = 0;
+        dealCards = [];
+    }else{
+        if (sum <= 20 && sum < dealerSum) {
+            message = "Do you want to draw a new card? 🙂";
+        }else if(sum <= 20 && sum >= dealerSum){
+            message = "Wohoo! You've won! Bet to play again.";
+            hasBlackJack = true;
+            player.credits += (betAmount*1.5);
+            dealerSum = 0;
+            dealCards = [];
+        }else if(sum === 21){
+            message = "Wohoo! You've got Blackjack! Bet to play again.";
+            hasBlackJack = true;
+            player.credits += (betAmount*1.5);
+            dealerSum = 0;
+            dealCards = [];
+        }else{
+            message = "You're out of the game! Bet to play again.";
+            isAlive = false;
+            dealerSum = 0;
+            dealCards = [];
+        }
+    } 
+
 
     playerEl.textContent = player.name + ": $" + player.credits;
     messageEl.textContent = message;
 }
+
 
 function newCard(){
 

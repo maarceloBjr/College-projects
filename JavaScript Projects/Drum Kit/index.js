@@ -2,7 +2,6 @@ let numberDrumBtns = document.querySelectorAll(".drum").length;
 let audio = new Audio();
 
 for (let i = 0; i < numberDrumBtns; i++) {
-    
     document.querySelectorAll(".drum")[i].addEventListener("click", function(){
         let buttonInnerHtml = this.innerHTML;
         makeSound(buttonInnerHtml);
